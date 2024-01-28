@@ -57,9 +57,9 @@ Change the mounting path. Replace it with the following:
 
 ```bash
 docker run -it \
-  -e POSTGRES_USER="root" \
-  -e POSTGRES_PASSWORD="root" \
-  -e POSTGRES_DB="ny_taxi" \
+  -e POSTGRES_USER=root \
+  -e POSTGRES_PASSWORD=root \
+  -e POSTGRES_DB=ny_taxi \
   -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
   -p 5432:5432 \
   postgres:13
@@ -119,10 +119,10 @@ Running pgAdmin
 
 ```bash
 docker run -it \
-  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
-  -e PGADMIN_DEFAULT_PASSWORD="root" \
+  -e 'PGADMIN_DEFAULT_EMAIL=admin@admin.com' \
+  -e 'PGADMIN_DEFAULT_PASSWORD=SuperSecret' \
   -p 8080:80 \
-  dpage/pgadmin4
+  -d dpage/pgadmin4
 ```
 
 ### Running Postgres and pgAdmin together
@@ -130,7 +130,7 @@ docker run -it \
 Create a network
 
 ```bash
-docker network create pg-network
+docker network create pg-network-de-2024-001
 ```
 
 Run Postgres (change the path)
@@ -140,9 +140,9 @@ docker run -it \
   -e POSTGRES_USER="root" \
   -e POSTGRES_PASSWORD="root" \
   -e POSTGRES_DB="ny_taxi" \
-  -v c:/Users/alexe/git/data-engineering-zoomcamp/week_1_basics_n_setup/2_docker_sql/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
   -p 5432:5432 \
-  --network=pg-network \
+  --network=pg-network-de-2024 \
   --name pg-database \
   postgres:13
 ```
@@ -152,10 +152,10 @@ Run pgAdmin
 ```bash
 docker run -it \
   -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
-  -e PGADMIN_DEFAULT_PASSWORD="root" \
+  -e PGADMIN_DEFAULT_PASSWORD="deroot" \
   -p 8080:80 \
-  --network=pg-network \
-  --name pgadmin-2 \
+  --network=pg-network-de-2024 \
+  --name pgadmin \
   dpage/pgadmin4
 ```
 
@@ -165,7 +165,7 @@ docker run -it \
 Running locally
 
 ```bash
-URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
+URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-09.csv.gz"
 
 python ingest_data.py \
   --user=root \
@@ -180,7 +180,7 @@ python ingest_data.py \
 Build the image
 
 ```bash
-docker build -t taxi_ingest:v001 .
+docker build -t ingest_taxi_data:v001 .
 ```
 
 On Linux you may have a problem building it:
@@ -202,17 +202,17 @@ You can solve it with `.dockerignore`:
 Run the script with Docker
 
 ```bash
-URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
+URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-09.csv.gz"
 
 docker run -it \
-  --network=pg-network \
-  taxi_ingest:v001 \
+  --network=pg-network-de-2024-001 \
+  ingest_taxi_data:v001 \
     --user=root \
     --password=root \
-    --host=pg-database \
+    --host=pg-database-001 \
     --port=5432 \
     --db=ny_taxi \
-    --table_name=yellow_taxi_trips \
+    --table_name=green_taxi_data \
     --url=${URL}
 ```
 
