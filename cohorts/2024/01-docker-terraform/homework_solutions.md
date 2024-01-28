@@ -2,11 +2,13 @@
 
 ## Question 1. Knowing docker tags
 
-![Solution 1](<Solution 1.png>)
+![Solution 1](<Images/Solution 1.png>)
+
 
 ## Question 2. Understanding docker first run 
 
-![Solution 2](<Solution 2.png>)
+![Solution 2](<Images/Solution 2.png>)
+
 
 ## Question 3. Count records 
 
@@ -21,7 +23,8 @@ date(lpep_dropoff_datetime) = '2019-09-18';
 15612
 ```
 
-![Solution 3](<Solution 3.png>)
+![Solution 3](<Images/Solution 3.png>)
+
 
 ## Question 4. Largest trip for each day
 
@@ -38,7 +41,8 @@ order by 2 desc;
 2019-09-26
 ```
 
-![Solution 4](<Solution 4.png>)
+![Solution 4](<Images/Solution 4.png>)
+
 
 ## Question 5. Three biggest pick up Boroughs
 
@@ -56,7 +60,8 @@ having sum(total_amount) > 50000
 order by 2 desc;
 ```
 
-![Solution 5](<Solution 5.png>)
+![Solution 5](<Images/Solution 5.png>)
+
 
 ## Question 6. Largest tip
 
@@ -78,10 +83,10 @@ inner join public.taxi_zone_lookup_data lkp
 on src."DOLocationID"=lkp."LocationID";
 ```
 
-![Solution 6](<Solution 6.png>)
+![Solution 6](<Images/Solution 6.png>)
+
 
 ## Terraform
-
 ## Question 7. Creating Resources
 
 After updating the main.tf and variable.tf files run:
@@ -92,4 +97,4 @@ terraform apply
 
 Paste the output of this command into the homework submission form.
 
-![Solution 7](<Solution 7.png>)
+![Solution 7](<Images/Solution 7.png>)
