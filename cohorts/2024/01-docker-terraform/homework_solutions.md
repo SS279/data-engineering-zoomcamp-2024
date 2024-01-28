@@ -2,7 +2,7 @@
 
 ## Question 1. Knowing docker tags
 
-[Solution 1](homework_solutions.md)
+![Solution 1](<Solution 1.png>)
 
 ## Question 2. Understanding docker first run 
 
